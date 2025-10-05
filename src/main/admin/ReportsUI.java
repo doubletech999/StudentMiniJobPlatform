@@ -32,9 +32,6 @@ public class ReportsUI extends Application {
         primaryStage.show();
     }
     
-    /**
-     * إنشاء مشهد التقارير
-     */
     private Scene createReportsScene() {
         BorderPane root = new BorderPane();
         root.setStyle("-fx-background-color: #ECEFF1;");
@@ -49,9 +46,6 @@ public class ReportsUI extends Application {
         return new Scene(root);
     }
     
-    /**
-     * إنشاء الشريط العلوي
-     */
     private HBox createTopBar() {
         HBox topBar = new HBox();
         topBar.setStyle("-fx-background-color: white;");
@@ -106,14 +100,10 @@ public class ReportsUI extends Application {
         return topBar;
     }
     
-    /**
-     * إنشاء المحتوى الرئيسي
-     */
     private VBox createMainContent() {
         VBox content = new VBox(30);
         content.setPadding(new Insets(30));
         
-        // عنوان التقرير
         VBox headerBox = new VBox(5);
         headerBox.setAlignment(Pos.CENTER);
         
@@ -127,7 +117,6 @@ public class ReportsUI extends Application {
         
         headerBox.getChildren().addAll(titleLabel, dateLabel);
         
-        // الإحصائيات الرئيسية
         HBox mainStats = new HBox(20);
         mainStats.setAlignment(Pos.CENTER);
         
@@ -138,7 +127,6 @@ public class ReportsUI extends Application {
             createBigStatCard("✅", "تدريبات مكتملة", "156", "+28 أُنجزت", "#9C27B0")
         );
         
-        // صف الرسوم البيانية الأول
         HBox chartsRow1 = new HBox(20);
         chartsRow1.setAlignment(Pos.CENTER);
         
@@ -147,7 +135,6 @@ public class ReportsUI extends Application {
         
         chartsRow1.getChildren().addAll(lineChartCard, pieChartCard);
         
-        // صف الرسوم البيانية الثاني
         HBox chartsRow2 = new HBox(20);
         chartsRow2.setAlignment(Pos.CENTER);
         
@@ -156,10 +143,7 @@ public class ReportsUI extends Application {
         
         chartsRow2.getChildren().addAll(barChartCard, areaChartCard);
         
-        // جدول الإحصائيات التفصيلية
         VBox detailedStats = createDetailedStatsTable();
-        
-        // الملخص النصي
         VBox summaryBox = createSummaryBox();
         
         content.getChildren().addAll(
@@ -174,9 +158,6 @@ public class ReportsUI extends Application {
         return content;
     }
     
-    /**
-     * إنشاء بطاقة إحصائية كبيرة
-     */
     private VBox createBigStatCard(String icon, String title, String value, String change, String color) {
         VBox card = new VBox(10);
         card.setAlignment(Pos.CENTER);
@@ -212,9 +193,6 @@ public class ReportsUI extends Application {
         return card;
     }
     
-    /**
-     * إنشاء بطاقة رسم بياني
-     */
     private VBox createChartCard(String title, Chart chart, double width) {
         VBox card = new VBox(15);
         card.setStyle(
@@ -234,9 +212,6 @@ public class ReportsUI extends Application {
         return card;
     }
     
-    /**
-     * إنشاء رسم بياني خطي
-     */
     private LineChart<String, Number> createLineChart() {
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -246,6 +221,77 @@ public class ReportsUI extends Application {
         LineChart<String, Number> lineChart = new LineChart<>(xAxis, yAxis);
         lineChart.setTitle("");
         lineChart.setPrefHeight(280);
+        
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("المستخدمين الجدد");
+        series.getData().add(new XYChart.Data<>("يناير", 25));
+        series.getData().add(new XYChart.Data<>("فبراير", 42));
+        series.getData().add(new XYChart.Data<>("مارس", 58));
+        series.getData().add(new XYChart.Data<>("أبريل", 73));
+        series.getData().add(new XYChart.Data<>("مايو", 89));
+        series.getData().add(new XYChart.Data<>("يونيو", 105));
+        series.getData().add(new XYChart.Data<>("يوليو", 128));
+        series.getData().add(new XYChart.Data<>("أغسطس", 156));
+        series.getData().add(new XYChart.Data<>("سبتمبر", 187));
+        series.getData().add(new XYChart.Data<>("أكتوبر", 220));
+        
+        lineChart.getData().add(series);
+        
+        return lineChart;
+    }
+    
+    private PieChart createPieChart() {
+        PieChart pieChart = new PieChart();
+        pieChart.getData().addAll(
+            new PieChart.Data("تطوير البرمجيات (32)", 32),
+            new PieChart.Data("تصميم (21)", 21),
+            new PieChart.Data("تسويق رقمي (18)", 18),
+            new PieChart.Data("علم البيانات (12)", 12),
+            new PieChart.Data("إدارة أعمال (6)", 6)
+        );
+        pieChart.setLegendVisible(true);
+        pieChart.setPrefHeight(280);
+        
+        return pieChart;
+    }
+    
+    private BarChart<String, Number> createBarChart() {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("الشهر");
+        yAxis.setLabel("عدد الطلبات");
+        
+        BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+        barChart.setTitle("");
+        barChart.setPrefHeight(280);
+        
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("الطلبات");
+        series.getData().add(new XYChart.Data<>("يناير", 45));
+        series.getData().add(new XYChart.Data<>("فبراير", 62));
+        series.getData().add(new XYChart.Data<>("مارس", 58));
+        series.getData().add(new XYChart.Data<>("أبريل", 78));
+        series.getData().add(new XYChart.Data<>("مايو", 85));
+        series.getData().add(new XYChart.Data<>("يونيو", 92));
+        series.getData().add(new XYChart.Data<>("يوليو", 105));
+        series.getData().add(new XYChart.Data<>("أغسطس", 98));
+        series.getData().add(new XYChart.Data<>("سبتمبر", 112));
+        series.getData().add(new XYChart.Data<>("أكتوبر", 128));
+        
+        barChart.getData().add(series);
+        
+        return barChart;
+    }
+    
+    private AreaChart<String, Number> createAreaChart() {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("الشهر");
+        yAxis.setLabel("معدل النجاح %");
+        
+        AreaChart<String, Number> areaChart = new AreaChart<>(xAxis, yAxis);
+        areaChart.setTitle("");
+        areaChart.setPrefHeight(280);
         
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("معدل النجاح");
@@ -265,9 +311,6 @@ public class ReportsUI extends Application {
         return areaChart;
     }
     
-    /**
-     * إنشاء جدول الإحصائيات التفصيلية
-     */
     private VBox createDetailedStatsTable() {
         VBox card = new VBox(20);
         card.setStyle(
@@ -287,23 +330,18 @@ public class ReportsUI extends Application {
         grid.setVgap(20);
         grid.setPadding(new Insets(20, 0, 0, 0));
         
-        // الصف الأول
         grid.add(createStatRow("إجمالي الطلاب المسجلين:", "180 طالب"), 0, 0);
         grid.add(createStatRow("إجمالي الشركات:", "45 شركة"), 1, 0);
         
-        // الصف الثاني
         grid.add(createStatRow("فرص التدريب المنشورة:", "89 فرصة"), 0, 1);
         grid.add(createStatRow("التدريبات النشطة حالياً:", "23 تدريب"), 1, 1);
         
-        // الصف الثالث
         grid.add(createStatRow("التدريبات المكتملة:", "156 تدريب"), 0, 2);
         grid.add(createStatRow("معدل إكمال التدريب:", "95%"), 1, 2);
         
-        // الصف الرابع
         grid.add(createStatRow("متوسط التقييم:", "4.6 / 5.0"), 0, 3);
         grid.add(createStatRow("معدل رضا الطلاب:", "92%"), 1, 3);
         
-        // الصف الخامس
         grid.add(createStatRow("معدل قبول الطلبات:", "68%"), 0, 4);
         grid.add(createStatRow("متوسط مدة التدريب:", "2.5 شهر"), 1, 4);
         
@@ -312,9 +350,6 @@ public class ReportsUI extends Application {
         return card;
     }
     
-    /**
-     * إنشاء صف إحصائية
-     */
     private HBox createStatRow(String label, String value) {
         HBox row = new HBox(15);
         row.setAlignment(Pos.CENTER_LEFT);
@@ -333,9 +368,6 @@ public class ReportsUI extends Application {
         return row;
     }
     
-    /**
-     * إنشاء صندوق الملخص
-     */
     private VBox createSummaryBox() {
         VBox card = new VBox(15);
         card.setStyle(
@@ -385,85 +417,3 @@ public class ReportsUI extends Application {
         launch(args);
     }
 }
-<String, Number> series = new XYChart.Series<>();
-        series.setName("المستخدمين الجدد");
-        series.getData().add(new XYChart.Data<>("يناير", 25));
-        series.getData().add(new XYChart.Data<>("فبراير", 42));
-        series.getData().add(new XYChart.Data<>("مارس", 58));
-        series.getData().add(new XYChart.Data<>("أبريل", 73));
-        series.getData().add(new XYChart.Data<>("مايو", 89));
-        series.getData().add(new XYChart.Data<>("يونيو", 105));
-        series.getData().add(new XYChart.Data<>("يوليو", 128));
-        series.getData().add(new XYChart.Data<>("أغسطس", 156));
-        series.getData().add(new XYChart.Data<>("سبتمبر", 187));
-        series.getData().add(new XYChart.Data<>("أكتوبر", 220));
-        
-        lineChart.getData().add(series);
-        
-        return lineChart;
-    }
-    
-    /**
-     * إنشاء رسم بياني دائري
-     */
-    private PieChart createPieChart() {
-        PieChart pieChart = new PieChart();
-        pieChart.getData().addAll(
-            new PieChart.Data("تطوير البرمجيات (32)", 32),
-            new PieChart.Data("تصميم (21)", 21),
-            new PieChart.Data("تسويق رقمي (18)", 18),
-            new PieChart.Data("علم البيانات (12)", 12),
-            new PieChart.Data("إدارة أعمال (6)", 6)
-        );
-        pieChart.setLegendVisible(true);
-        pieChart.setPrefHeight(280);
-        
-        return pieChart;
-    }
-    
-    /**
-     * إنشاء رسم بياني شريطي
-     */
-    private BarChart<String, Number> createBarChart() {
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("الشهر");
-        yAxis.setLabel("عدد الطلبات");
-        
-        BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
-        barChart.setTitle("");
-        barChart.setPrefHeight(280);
-        
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("الطلبات");
-        series.getData().add(new XYChart.Data<>("يناير", 45));
-        series.getData().add(new XYChart.Data<>("فبراير", 62));
-        series.getData().add(new XYChart.Data<>("مارس", 58));
-        series.getData().add(new XYChart.Data<>("أبريل", 78));
-        series.getData().add(new XYChart.Data<>("مايو", 85));
-        series.getData().add(new XYChart.Data<>("يونيو", 92));
-        series.getData().add(new XYChart.Data<>("يوليو", 105));
-        series.getData().add(new XYChart.Data<>("أغسطس", 98));
-        series.getData().add(new XYChart.Data<>("سبتمبر", 112));
-        series.getData().add(new XYChart.Data<>("أكتوبر", 128));
-        
-        barChart.getData().add(series);
-        
-        return barChart;
-    }
-    
-    /**
-     * إنشاء رسم بياني مساحي
-     */
-    private AreaChart<String, Number> createAreaChart() {
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("الشهر");
-        yAxis.setLabel("معدل النجاح %");
-        
-        AreaChart<String, Number> areaChart = new AreaChart<>(xAxis, yAxis);
-        areaChart.setTitle("");
-        areaChart.setPrefHeight(280);
-        
-        XYChart.Series
-    }
